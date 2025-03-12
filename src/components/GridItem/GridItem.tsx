@@ -9,7 +9,7 @@ type GridItemProps = {
 
 export function GridItem({ posterUrl, date, title, key }: GridItemProps) {
   return (
-    <div className={styles.gridContainer}>
+    <div className={styles.gridItemContainer} data-testId="grid-item">
       <div key={key} className={styles.gridItem}>
         <img src={posterUrl} alt={title} />
         <h3>{title}</h3>

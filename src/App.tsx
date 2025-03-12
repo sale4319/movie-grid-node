@@ -1,11 +1,7 @@
 import { MainGrid } from "./components";
 
 function App() {
-  return (
-    <>
-      <MainGrid />
-    </>
-  );
+  return <MainGrid />;
 }
 
 export default App;
