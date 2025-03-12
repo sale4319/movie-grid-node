@@ -1,54 +1,32 @@
-# React + TypeScript + Vite
+### Project requirements
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- Filter duplicated movies from the response
+- Sort movies by imdb rating
+- Render all filtered & sorted movies in grid view
+- Each rendered movie item should display title, poster, release date and inFavorites status
+- Enable keyboard navigation
+- Highlight selected item
+- On Enter key add item to favorites / or remove when it is already in favorites
 
-Currently, two official plugins are available:
+### Developmnet plan
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [x] Configure test environment
+- [x] Add skeleton structure
+- [x] Add basic grid layout
+- [x] Map and display grid items from dataset
+- [x] Add github workflow for CI/CD on merge
+- [ ] Build item card
+- [ ] Update grid layout
+- [ ] Filter duplicated movies from response
+- [ ] Sort movies by imdb rating
+- [ ] Add favourite component
+- [ ] Add handler to pop selected item
+- [ ] Add handlers for keyboard navigation
 
-## Expanding the ESLint configuration
+### Documentation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- As this is shallow and interactive application there is no use for RSC
+- Will try to keep up with unit test coverage and implement simple e2e if there is time
+- Could consider rollup and JS packaging at least to enable workspace
+- Could use some opensource API instead of JSON dataset
+- TBD
