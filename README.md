@@ -17,11 +17,23 @@
 - [x] Add github workflow for CI/CD on merge
 - [x] Build item card
 - [x] Update grid layout
-- [ ] Filter duplicated movies from response
-- [ ] Sort movies by imdb rating
+- [x] Filter duplicated movies from response
+- [x] Sort movies by imdb rating
 - [x] Add favourite component
 - [x] Add handler to pop selected item
 - [ ] Add handlers for keyboard navigation
+
+### How to run the project
+
+Clone it from github and do `yarn install` and run the project with `yarn dev`
+
+To run checkDuplicates.js navigate to mocks folder:
+
+`cd src/mocks`
+
+and run
+
+`node checkDuplicates.js`
 
 ### Documentation
 
@@ -30,4 +42,4 @@
 - Could consider rollup and JS packaging at least to enable workspace
 - Could use some opensource API instead of JSON dataset
 - Could implement storybook as distributed UI
-- TBD
+- I added responsive transition to show 2 columns when width is less then 768px

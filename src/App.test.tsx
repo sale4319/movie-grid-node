@@ -18,7 +18,7 @@ describe("App", () => {
     expect(mainGrid).toBeInTheDocument();
 
     const gridItems = screen.getAllByTestId("grid-item");
-    expect(gridItems).toHaveLength(1219);
+    expect(gridItems).toHaveLength(1215);
   });
 
   it("renders all gridItems", async () => {
@@ -27,7 +27,7 @@ describe("App", () => {
     expect(mainGrid).toBeInTheDocument();
 
     const gridItems = screen.getAllByTestId("grid-item");
-    expect(gridItems).toHaveLength(1219);
+    expect(gridItems).toHaveLength(1215);
   });
 
   it("favourite icon changes when clicked", async () => {
@@ -36,7 +36,7 @@ describe("App", () => {
     expect(mainGrid).toBeInTheDocument();
 
     const gridItems = screen.getAllByTestId("grid-item");
-    expect(gridItems).toHaveLength(1219);
+    expect(gridItems).toHaveLength(1215);
 
     const firstFavoriteIcon = screen.getAllByTestId(
       "favourite-icon-outlined"

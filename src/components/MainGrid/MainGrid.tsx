@@ -11,9 +11,16 @@ export default function MainGrid() {
   const handleSelect = (id: number) => {
     setSelected((prevSelected) => (prevSelected === id ? null : id));
   };
+
+  const uniqueMovies = movies
+    .filter(
+      (movie, index, self) => index === self.findIndex((m) => m.id === movie.id)
+    )
+    .sort((a, b) => b.ratings[0].rating - a.ratings[0].rating);
+
   return (
     <div data-testid="main-grid" className={styles.mainGrid}>
-      {movies.map((item, index) => (
+      {uniqueMovies.map((item, index) => (
         <GridItem
           key={index}
           title={item.title}
