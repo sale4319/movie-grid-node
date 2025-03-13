@@ -1,37 +1,58 @@
-.gridItemContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
+.movieCard {
+  width: 180px;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s;
 }
 
-.gridItem {
+.movieCard.selected {
+  background-color: #3f93d5;
+  transform: scale(1.2);
+  z-index: 1;
+}
+
+.movieImage {
+  width: 100%;
+  height: 220px;
+  object-fit: fill;
+  border-radius: 6px 6px 0 0;
+}
+
+.movieInfoWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 200px;
-  height: 300px;
+  justify-content: center;
+  padding: 5px;
+}
+
+.movieTitle {
+  width: 100%;
+  font-size: 18px;
+  font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #4b4b4b;
 }
 
-.gridItem img {
+.movieTitle.selected {
+  color: white;
+}
+
+.movieDateContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
-  height: 75%;
-  object-fit: fill;
 }
 
-.gridItem h3 {
-  margin: 10px 0 5px;
-  font-size: 1.2em;
-  text-align: center;
+.movieDate {
+  font-size: 12px;
+  color: #747474;
 }
-
-.gridItem .date {
-  font-size: 0.9em;
-  color: #666;
+.movieDate.selected {
+  color: white;
 }
