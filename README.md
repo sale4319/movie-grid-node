@@ -21,7 +21,7 @@
 - [x] Sort movies by imdb rating
 - [x] Add favourite component
 - [x] Add handler to pop selected item
-- [ ] Add handlers for keyboard navigation
+- [x] Add handlers for keyboard navigation
 
 ### How to run the project
 

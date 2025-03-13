@@ -10,6 +10,8 @@ type GridItemProps = {
   title: string;
   date?: string;
   isSelected: boolean;
+  inFavorites?: boolean;
+  toggleFavourite?: () => void;
   onSelect: () => void;
 };
 
@@ -19,6 +21,8 @@ export function GridItem({
   date,
   title,
   isSelected,
+  inFavorites = false,
+  toggleFavourite = () => {},
   onSelect,
 }: GridItemProps) {
   if (!date) {
@@ -50,7 +54,11 @@ export function GridItem({
           <div className={[styles.movieDate, selectedMode].join(" ")}>
             {formattedDate}
           </div>
-          <FavouriteButton selected={isSelected} />
+          <FavouriteButton
+            selected={isSelected}
+            inFavorites={inFavorites}
+            toggleFavourite={toggleFavourite}
+          />
         </div>
       </div>
     </div>
