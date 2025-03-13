@@ -16,15 +16,21 @@ export function FavouriteButton({ selected }: FavouriteButtonProps) {
 
   const selectedMode = selected ? styles.selected : "";
 
+  if (inFavorites) {
+    return (
+      <StarIcon
+        className={[styles.iconColor, selectedMode].join(" ")}
+        onClick={handleFavourite}
+        data-testid="favourite-icon-filled"
+      />
+    );
+  }
+
   return (
-    <button className={styles.favoriteButton} onClick={handleFavourite}>
-      {inFavorites ? (
-        <StarIcon className={[styles.iconColor, selectedMode].join(" ")} />
-      ) : (
-        <StarOutlineIcon
-          className={[styles.iconColor, selectedMode].join(" ")}
-        />
-      )}
-    </button>
+    <StarOutlineIcon
+      className={[styles.iconColor, selectedMode].join(" ")}
+      onClick={handleFavourite}
+      data-testid="favourite-icon-outlined"
+    />
   );
 }

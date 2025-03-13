@@ -1,14 +1,3 @@
-.favoriteButton {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-.favoriteButton:focus {
-  outline: 0;
-}
-
 .iconColor {
   color: #292929;
 }
