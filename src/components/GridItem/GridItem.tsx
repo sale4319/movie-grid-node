@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { FavouriteButton } from "../../components";
 
 import hboLogo from "../../assets/hbo.svg";
@@ -8,25 +7,27 @@ type GridItemProps = {
   posterUrl: string;
   title: string;
   date?: string;
+  isSelected: boolean;
+  onSelect: () => void;
 };
 
-export function GridItem({ posterUrl, date, title }: GridItemProps) {
+export function GridItem({
+  posterUrl,
+  date,
+  title,
+  isSelected,
+  onSelect,
+}: GridItemProps) {
   if (!date) {
     return null;
   }
 
-  const [selected, setSelected] = useState(false);
-
-  const handleSelect = () => {
-    setSelected(!selected);
-  };
-
-  const selectedMode = selected ? styles.selected : "";
+  const selectedMode = isSelected ? styles.selected : "";
 
   return (
     <div
       className={[styles.movieCard, selectedMode].join(" ")}
-      onClick={handleSelect}
+      onClick={onSelect}
       data-testid="grid-item"
     >
       <img src={posterUrl} alt={title} className={styles.movieImage} />
@@ -42,7 +43,7 @@ export function GridItem({ posterUrl, date, title }: GridItemProps) {
           <div className={[styles.movieDate, selectedMode].join(" ")}>
             {date}
           </div>
-          <FavouriteButton selected={selected} />
+          <FavouriteButton selected={isSelected} />
         </div>
       </div>
     </div>
