@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { GridItem } from "../../components";
 import { BASE_URL, FILE_SIZE } from "../../constants";
-import movies from "../../mocks/moviesFixture.json";
 
+import movies from "../../mocks/moviesFixture.json";
 import styles from "./MainGrid.module.css";
 
 export default function MainGrid() {

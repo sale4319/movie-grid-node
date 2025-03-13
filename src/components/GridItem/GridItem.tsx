@@ -1,8 +1,8 @@
 import { FavouriteButton } from "../../components";
+import { formatDate } from "../../utils";
 
 import hboLogo from "../../assets/hbo.svg";
 import styles from "./GridItem.module.css";
-import { formatDate } from "../../utils";
 
 type GridItemProps = {
   posterUrl: string;
