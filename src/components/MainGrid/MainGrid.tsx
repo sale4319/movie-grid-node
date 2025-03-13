@@ -8,7 +8,7 @@ const FILE_SIZE = "w500";
 
 export default function MainGrid() {
   return (
-    <div data-testId="main-grid" className={styles.mainGrid}>
+    <div data-testid="main-grid" className={styles.mainGrid}>
       {movies.map((item, index) => (
         <GridItem
           key={index}

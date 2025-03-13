@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { FavouriteButton } from "../../components";
 
+import hboLogo from "../../assets/hbo.svg";
 import styles from "./GridItem.module.css";
 
 type GridItemProps = {
   posterUrl: string;
   title: string;
   date?: string;
-  key: number;
 };
 
-export function GridItem({ posterUrl, date, title, key }: GridItemProps) {
+export function GridItem({ posterUrl, date, title }: GridItemProps) {
   if (!date) {
     return null;
   }
@@ -27,11 +27,14 @@ export function GridItem({ posterUrl, date, title, key }: GridItemProps) {
     <div
       className={[styles.movieCard, selectedMode].join(" ")}
       onClick={handleSelect}
-      data-testId="grid-item"
-      key={key}
+      data-testid="grid-item"
     >
       <img src={posterUrl} alt={title} className={styles.movieImage} />
+
       <div className={styles.movieInfoWrapper}>
+        <div className={styles.hboStrip}>
+          <img src={hboLogo} className={styles.hboLogo} alt="hbo-logo" />
+        </div>
         <div className={[styles.movieTitle, selectedMode].join(" ")}>
           {title}
         </div>
