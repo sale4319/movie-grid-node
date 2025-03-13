@@ -2,6 +2,7 @@ import { FavouriteButton } from "../../components";
 
 import hboLogo from "../../assets/hbo.svg";
 import styles from "./GridItem.module.css";
+import { formatDate } from "../../utils";
 
 type GridItemProps = {
   posterUrl: string;
@@ -21,7 +22,7 @@ export function GridItem({
   if (!date) {
     return null;
   }
-
+  const formattedDate = formatDate(date);
   const selectedMode = isSelected ? styles.selected : "";
 
   return (
@@ -41,7 +42,7 @@ export function GridItem({
         </div>
         <div className={styles.movieDateContainer}>
           <div className={[styles.movieDate, selectedMode].join(" ")}>
-            {date}
+            {formattedDate}
           </div>
           <FavouriteButton selected={isSelected} />
         </div>
