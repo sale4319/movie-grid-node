@@ -1,0 +1,7 @@
+.iconColor {
+  color: #292929;
+}
+
+.iconColor.selected {
+  color: white;
+}

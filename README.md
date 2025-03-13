@@ -15,12 +15,12 @@
 - [x] Add basic grid layout
 - [x] Map and display grid items from dataset
 - [x] Add github workflow for CI/CD on merge
-- [ ] Build item card
-- [ ] Update grid layout
+- [x] Build item card
+- [x] Update grid layout
 - [ ] Filter duplicated movies from response
 - [ ] Sort movies by imdb rating
-- [ ] Add favourite component
-- [ ] Add handler to pop selected item
+- [x] Add favourite component
+- [x] Add handler to pop selected item
 - [ ] Add handlers for keyboard navigation
 
 ### Documentation
@@ -29,4 +29,5 @@
 - Will try to keep up with unit test coverage and implement simple e2e if there is time
 - Could consider rollup and JS packaging at least to enable workspace
 - Could use some opensource API instead of JSON dataset
+- Could implement storybook as distributed UI
 - TBD

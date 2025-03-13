@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
 
 import App from "./App";
 
@@ -9,5 +10,44 @@ describe("App", () => {
     const mainGrid = screen.getByTestId("main-grid");
 
     expect(mainGrid).toBeInTheDocument();
+  });
+
+  it("renders all gridItems", async () => {
+    render(<App />);
+    const mainGrid = screen.getByTestId("main-grid");
+    expect(mainGrid).toBeInTheDocument();
+
+    const gridItems = screen.getAllByTestId("grid-item");
+    expect(gridItems).toHaveLength(1219);
+  });
+
+  it("renders all gridItems", async () => {
+    render(<App />);
+    const mainGrid = screen.getByTestId("main-grid");
+    expect(mainGrid).toBeInTheDocument();
+
+    const gridItems = screen.getAllByTestId("grid-item");
+    expect(gridItems).toHaveLength(1219);
+  });
+
+  it("favourite icon changes when clicked", async () => {
+    render(<App />);
+    const mainGrid = screen.getByTestId("main-grid");
+    expect(mainGrid).toBeInTheDocument();
+
+    const gridItems = screen.getAllByTestId("grid-item");
+    expect(gridItems).toHaveLength(1219);
+
+    const firstFavoriteIcon = screen.getAllByTestId(
+      "favourite-icon-outlined"
+    )[0];
+    expect(firstFavoriteIcon).toBeInTheDocument();
+
+    await userEvent.click(firstFavoriteIcon);
+
+    const favoriteButtonClicked = screen.getAllByTestId(
+      "favourite-icon-filled"
+    )[0];
+    expect(favoriteButtonClicked).toBeInTheDocument();
   });
 });
