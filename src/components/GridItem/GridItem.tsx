@@ -6,6 +6,7 @@ import styles from "./GridItem.module.css";
 
 type GridItemProps = {
   posterUrl: string;
+  backdropUrl: string;
   title: string;
   date?: string;
   isSelected: boolean;
@@ -14,6 +15,7 @@ type GridItemProps = {
 
 export function GridItem({
   posterUrl,
+  backdropUrl,
   date,
   title,
   isSelected,
@@ -31,7 +33,11 @@ export function GridItem({
       onClick={onSelect}
       data-testid="grid-item"
     >
-      <img src={posterUrl} alt={title} className={styles.movieImage} />
+      {isSelected ? (
+        <img src={backdropUrl} alt={title} className={styles.movieBackdrop} />
+      ) : (
+        <img src={posterUrl} alt={title} className={styles.movieImage} />
+      )}
 
       <div className={styles.movieInfoWrapper}>
         <div className={styles.hboStrip}>
