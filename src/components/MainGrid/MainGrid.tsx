@@ -26,6 +26,7 @@ export default function MainGrid() {
           title={item.title}
           date={item.release_date}
           posterUrl={`${BASE_URL}${FILE_SIZE}${item.poster_path}`}
+          backdropUrl={`${BASE_URL}${FILE_SIZE}${item.backdrop_path}`}
           isSelected={selected === item.id}
           onSelect={() => handleSelect(item.id)}
         />
