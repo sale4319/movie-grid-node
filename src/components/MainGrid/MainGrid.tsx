@@ -1,13 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GridItem } from "../../components";
 import { BASE_URL, FILE_SIZE } from "../../constants";
+import { LoadMoreButton } from "../../components";
+import { useLocalStorage } from "../../utils";
 
 import movies from "../../mocks/moviesFixture.json";
 import styles from "./MainGrid.module.css";
-
 export default function MainGrid() {
-  const [selected, setSelected] = useState<number | null>(null);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [selected, setSelected] = useLocalStorage<number | null>(
+    "selectedMovie",
+    null
+  );
   const [favorites, setFavorites] = useState<number[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 18;
   const columns = 6;
 
   const handleSelect = (id: number) => {
@@ -28,6 +35,9 @@ export default function MainGrid() {
     )
     .sort((a, b) => b.ratings[0].rating - a.ratings[0].rating);
 
+  const totalPages = Math.ceil(uniqueMovies.length / itemsPerPage);
+  const currentMovies = uniqueMovies.slice(0, currentPage * itemsPerPage);
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (
@@ -47,12 +57,16 @@ export default function MainGrid() {
         } else if (event.key === "ArrowLeft") {
           newIndex =
             (currentIndex - 1 + uniqueMovies.length) % uniqueMovies.length;
+          if (newIndex < 0) newIndex = 0;
         } else if (event.key === "ArrowDown") {
           newIndex = (currentIndex + columns) % uniqueMovies.length;
         } else if (event.key === "ArrowUp") {
-          newIndex =
-            (currentIndex - columns + uniqueMovies.length) %
-            uniqueMovies.length;
+          newIndex = currentIndex - columns;
+          if (newIndex < 0) newIndex = 0;
+        }
+
+        if (newIndex === uniqueMovies.length - 1) {
+          newIndex = 0;
         }
 
         setSelected(uniqueMovies[newIndex].id);
@@ -67,21 +81,53 @@ export default function MainGrid() {
     };
   }, [selected, uniqueMovies]);
 
+  useEffect(() => {
+    if (selected !== null) {
+      localStorage.setItem("selectedMovie", selected.toString());
+      const selectedIndex = uniqueMovies.findIndex(
+        (movie) => movie.id === selected
+      );
+      if (itemRefs.current[selectedIndex]) {
+        itemRefs.current[selectedIndex]?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }
+      if (selectedIndex >= 18 && currentPage < totalPages) {
+        handleLoadMore();
+      }
+    } else {
+      localStorage.removeItem("selectedMovie");
+    }
+  }, [selected, uniqueMovies]);
+
+  const handleLoadMore = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+  };
+
   return (
-    <div data-testid="main-grid" className={styles.mainGrid}>
-      {uniqueMovies.map((item, index) => (
-        <GridItem
-          key={index}
-          title={item.title}
-          date={item.release_date}
-          posterUrl={`${BASE_URL}${FILE_SIZE}${item.poster_path}`}
-          backdropUrl={`${BASE_URL}${FILE_SIZE}${item.backdrop_path}`}
-          isSelected={selected === item.id}
-          inFavorites={favorites.includes(item.id)}
-          toggleFavourite={() => toggleFavourite(item.id)}
-          onSelect={() => handleSelect(item.id)}
-        />
-      ))}
-    </div>
+    <>
+      <div data-testid="main-grid" className={styles.mainGrid}>
+        {currentMovies.map((item, index) => (
+          <GridItem
+            key={index}
+            ref={(el) => {
+              itemRefs.current[index] = el;
+            }}
+            title={item.title}
+            date={item.release_date}
+            posterUrl={`${BASE_URL}${FILE_SIZE}${item.poster_path}`}
+            backdropUrl={`${BASE_URL}${FILE_SIZE}${item.backdrop_path}`}
+            isSelected={selected === item.id}
+            inFavorites={favorites.includes(item.id)}
+            toggleFavourite={() => toggleFavourite(item.id)}
+            onSelect={() => handleSelect(item.id)}
+          />
+        ))}
+      </div>
+      {currentPage < totalPages && (
+        <LoadMoreButton handleLoadMore={handleLoadMore} />
+      )}
+    </>
   );
 }

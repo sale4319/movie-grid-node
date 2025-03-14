@@ -22,6 +22,9 @@
 - [x] Add favourite component
 - [x] Add handler to pop selected item
 - [x] Add handlers for keyboard navigation
+- [x] Add view port tracking with keyboard navigation
+- [x] Add show more functionality
+- [x] Add localStorage to persist selected item
 
 ### How to run the project
 

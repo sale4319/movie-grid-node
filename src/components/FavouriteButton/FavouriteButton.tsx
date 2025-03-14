@@ -33,7 +33,6 @@ export function FavouriteButton({
         className={[styles.iconColor, selectedMode].join(" ")}
         onClick={handleFavourite}
         onKeyDown={handleKeyDown}
-        tabIndex={0}
         data-testid="favourite-icon-filled"
       />
     );
@@ -44,7 +43,6 @@ export function FavouriteButton({
       className={[styles.iconColor, selectedMode].join(" ")}
       onClick={handleFavourite}
       onKeyDown={handleKeyDown}
-      tabIndex={0}
       data-testid="favourite-icon-outlined"
     />
   );
