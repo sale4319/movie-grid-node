@@ -1,0 +1,17 @@
+.loadMore {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.loadMore button {
+  background: none;
+  border: none;
+  color: #4b4b4b;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.loadMore button:hover {
+  text-decoration: none;
+}

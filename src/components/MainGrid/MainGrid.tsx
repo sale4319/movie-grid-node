@@ -1,13 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { GridItem } from "../../components";
 import { BASE_URL, FILE_SIZE } from "../../constants";
+import { LoadMoreButton } from "../../components";
+import { useLocalStorage } from "../../utils";
 
 import movies from "../../mocks/moviesFixture.json";
 import styles from "./MainGrid.module.css";
-
 export default function MainGrid() {
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useLocalStorage<number | null>(
+    "selectedMovie",
+    null
+  );
   const [favorites, setFavorites] = useState<number[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 18;
@@ -53,12 +57,14 @@ export default function MainGrid() {
         } else if (event.key === "ArrowLeft") {
           newIndex =
             (currentIndex - 1 + uniqueMovies.length) % uniqueMovies.length;
+          if (newIndex < 0) newIndex = 0;
         } else if (event.key === "ArrowDown") {
           newIndex = (currentIndex + columns) % uniqueMovies.length;
         } else if (event.key === "ArrowUp") {
           newIndex =
             (currentIndex - columns + uniqueMovies.length) %
             uniqueMovies.length;
+          if (newIndex < 0) newIndex = 0;
         }
 
         setSelected(uniqueMovies[newIndex].id);
@@ -75,6 +81,7 @@ export default function MainGrid() {
 
   useEffect(() => {
     if (selected !== null) {
+      localStorage.setItem("selectedMovie", selected.toString());
       const selectedIndex = uniqueMovies.findIndex(
         (movie) => movie.id === selected
       );
@@ -84,6 +91,11 @@ export default function MainGrid() {
           block: "center",
         });
       }
+      if (selectedIndex >= 18 && currentPage < totalPages) {
+        handleLoadMore();
+      }
+    } else {
+      localStorage.removeItem("selectedMovie");
     }
   }, [selected, uniqueMovies]);
 
@@ -112,11 +124,7 @@ export default function MainGrid() {
         ))}
       </div>
       {currentPage < totalPages && (
-        <div className={styles.loadMore}>
-          <button tabIndex={0} onClick={handleLoadMore}>
-            Load More
-          </button>
-        </div>
+        <LoadMoreButton handleLoadMore={handleLoadMore} />
       )}
     </>
   );
