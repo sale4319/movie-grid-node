@@ -11,4 +11,8 @@ export default defineConfig({
     setupFiles: ["./src/setupTests.ts"],
     include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
   },
+  server: {
+    host: true,
+    port: 3000,
+  },
 } as UserConfig);
