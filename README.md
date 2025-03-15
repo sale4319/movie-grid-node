@@ -25,6 +25,7 @@
 - [x] Add view port tracking with keyboard navigation
 - [x] Add show more functionality
 - [x] Add localStorage to persist selected item
+- [x] Add e2e test and update unit tests
 
 ### How to run the project
 
@@ -41,7 +42,7 @@ and run
 ### Documentation
 
 - As this is shallow and interactive application there is no use for RSC
-- Will try to keep up with unit test coverage and implement simple e2e if there is time
+- ~~Will try to keep up with unit test coverage and implement simple e2e if there is time~~
 - Could consider rollup and JS packaging at least to enable workspace
 - Could use some opensource API instead of JSON dataset
 - Could implement storybook as distributed UI

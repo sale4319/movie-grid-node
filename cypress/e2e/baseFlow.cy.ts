@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 describe("Base flow e2e test", () => {
   it("should visit and select and favour third item", () => {
     cy.visit("https://sale4319.github.io/movie-grid-node/");
