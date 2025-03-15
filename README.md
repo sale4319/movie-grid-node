@@ -39,6 +39,12 @@ and run
 
 `node checkDuplicates.js`
 
+E2E tests are running on deployment so there is no need to start project locally:
+
+To open cypress use `yarn cy:open-e2e` select prefered browser and clik on baseFlow test to start it in Cypress client.
+
+To run e2e detached use `yarn cy:run-e2e`.
+
 ### Documentation
 
 - As this is shallow and interactive application there is no use for RSC
