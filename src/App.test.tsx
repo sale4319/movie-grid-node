@@ -18,7 +18,7 @@ describe("App", () => {
     expect(mainGrid).toBeInTheDocument();
 
     const gridItems = screen.getAllByTestId("grid-item");
-    expect(gridItems).toHaveLength(1215);
+    expect(gridItems).toHaveLength(18);
   });
 
   it("renders all gridItems", async () => {
@@ -27,7 +27,7 @@ describe("App", () => {
     expect(mainGrid).toBeInTheDocument();
 
     const gridItems = screen.getAllByTestId("grid-item");
-    expect(gridItems).toHaveLength(1215);
+    expect(gridItems).toHaveLength(18);
   });
 
   it("favourite icon changes when clicked", async () => {
@@ -36,7 +36,7 @@ describe("App", () => {
     expect(mainGrid).toBeInTheDocument();
 
     const gridItems = screen.getAllByTestId("grid-item");
-    expect(gridItems).toHaveLength(1215);
+    expect(gridItems).toHaveLength(18);
 
     const firstFavoriteIcon = screen.getAllByTestId(
       "favourite-icon-outlined"
@@ -49,5 +49,21 @@ describe("App", () => {
       "favourite-icon-filled"
     )[0];
     expect(favoriteButtonClicked).toBeInTheDocument();
+  });
+
+  it("renders the correct number of favourite icons", async () => {
+    render(<App />);
+    const mainGrid = screen.getByTestId("main-grid");
+    expect(mainGrid).toBeInTheDocument();
+
+    const favoriteIconsOutlined = screen.getAllByTestId(
+      "favourite-icon-outlined"
+    );
+    expect(favoriteIconsOutlined).toHaveLength(18);
+
+    await userEvent.click(favoriteIconsOutlined[0]);
+
+    const favoriteIconsFilled = screen.getAllByTestId("favourite-icon-filled");
+    expect(favoriteIconsFilled).toHaveLength(1);
   });
 });
