@@ -53,6 +53,7 @@ export const GridItem = forwardRef<HTMLDivElement, GridItemProps>(
             alt={title}
             className={styles.movieBackdrop}
             onError={handleImageError}
+            loading="lazy"
           />
         ) : (
           <img
@@ -60,6 +61,7 @@ export const GridItem = forwardRef<HTMLDivElement, GridItemProps>(
             alt={title}
             className={styles.movieImage}
             onError={handleImageError}
+            loading="lazy"
           />
         )}
 
