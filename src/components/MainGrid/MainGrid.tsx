@@ -1,13 +1,12 @@
 import { useCallback, useRef, useState } from "react";
 import { GridItem } from "../../components";
-import { BASE_URL, FILE_SIZE } from "../../constants";
 import { LoadMoreButton } from "../../components";
 import {
   useLocalStorage,
   useKeyboardNavigation,
   useScrollToSelected,
 } from "../../hooks";
-import { debounce, getUniqueMovies } from "../../utils";
+import { debounce, getImageSrc, getUniqueMovies } from "../../utils";
 import { Movie } from "../../types";
 
 import movies from "../../mocks/moviesFixture.json";
@@ -76,8 +75,8 @@ export default function MainGrid() {
             }}
             title={item.title}
             date={item.release_date}
-            posterUrl={`${BASE_URL}${FILE_SIZE}${item.poster_path}`}
-            backdropUrl={`${BASE_URL}${FILE_SIZE}${item.backdrop_path}`}
+            posterUrl={getImageSrc(item.poster_path)}
+            backdropUrl={getImageSrc(item.backdrop_path)}
             isSelected={selected === item.id}
             inFavorites={favorites.includes(item.id)}
             toggleFavourite={() => toggleFavourite(item.id)}

@@ -66,4 +66,32 @@ describe("App", () => {
     const favoriteIconsFilled = screen.getAllByTestId("favourite-icon-filled");
     expect(favoriteIconsFilled).toHaveLength(1);
   });
+
+  it("navigates through grid items using keyboard", async () => {
+    render(<App />);
+    const mainGrid = screen.getByTestId("main-grid");
+    expect(mainGrid).toBeInTheDocument();
+
+    const gridItems = screen.getAllByTestId("grid-item");
+    expect(gridItems).toHaveLength(18);
+
+    await userEvent.click(gridItems[0]);
+
+    expect(gridItems[0]).toHaveClass("_movieCard_6a6f68 _selected_6a6f68");
+
+    await userEvent.keyboard("{ArrowRight}");
+    expect(gridItems[1]).toHaveClass("_movieCard_6a6f68 _selected_6a6f68");
+
+    await userEvent.keyboard("{ArrowRight}");
+    expect(gridItems[2]).toHaveClass("_movieCard_6a6f68 _selected_6a6f68");
+
+    await userEvent.keyboard("{ArrowLeft}");
+    expect(gridItems[1]).toHaveClass("_movieCard_6a6f68 _selected_6a6f68");
+
+    await userEvent.keyboard("{ArrowDown}");
+    expect(gridItems[7]).toHaveClass("_movieCard_6a6f68 _selected_6a6f68");
+
+    await userEvent.keyboard("{ArrowUp}");
+    expect(gridItems[1]).toHaveClass("_movieCard_6a6f68 _selected_6a6f68");
+  });
 });

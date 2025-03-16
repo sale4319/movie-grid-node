@@ -1,4 +1,8 @@
 import { Movie } from "../types";
+import { BASE_URL, FILE_SIZE } from "../constants";
+
+export const getImageSrc = (path: string | null) =>
+  `${BASE_URL}${FILE_SIZE}${path}`;
 
 export const getUniqueMovies = (movies: Movie[]): Movie[] => {
   return movies
