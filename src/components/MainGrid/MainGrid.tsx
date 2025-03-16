@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { GridItem } from "../../components";
 import { BASE_URL, FILE_SIZE } from "../../constants";
 import { LoadMoreButton } from "../../components";
@@ -11,6 +11,7 @@ import {
 import movies from "../../mocks/moviesFixture.json";
 import styles from "./MainGrid.module.css";
 import { Movie } from "../../types";
+import { getUniqueMovies } from "../../utils";
 
 export default function MainGrid() {
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -39,14 +40,10 @@ export default function MainGrid() {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
   };
 
-  const uniqueMovies: Movie[] = movies
-    .filter((movie) => movie.poster_path !== null)
-    .filter(
-      (movie, index, self) =>
-        index === self.findIndex((m) => m.id === movie.id) &&
-        movie.poster_path !== null
-    )
-    .sort((a, b) => b.ratings[0].rating - a.ratings[0].rating);
+  const uniqueMovies: Movie[] = useCallback(
+    () => getUniqueMovies(movies),
+    [movies]
+  )();
 
   const totalPages = Math.ceil(uniqueMovies.length / itemsPerPage);
   const currentMovies = uniqueMovies.slice(0, currentPage * itemsPerPage);
