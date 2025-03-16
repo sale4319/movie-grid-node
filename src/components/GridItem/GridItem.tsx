@@ -1,4 +1,4 @@
-import { forwardRef, useState } from "react";
+import { forwardRef, useState, memo } from "react";
 import { FavouriteButton } from "../../components";
 import { formatDate } from "../../utils";
 
@@ -16,7 +16,7 @@ type GridItemProps = {
   onSelect: () => void;
 };
 
-export const GridItem = forwardRef<HTMLDivElement, GridItemProps>(
+const GridItem = forwardRef<HTMLDivElement, GridItemProps>(
   (
     {
       posterUrl,
@@ -53,6 +53,7 @@ export const GridItem = forwardRef<HTMLDivElement, GridItemProps>(
             alt={title}
             className={styles.movieBackdrop}
             onError={handleImageError}
+            loading="lazy"
           />
         ) : (
           <img
@@ -60,6 +61,7 @@ export const GridItem = forwardRef<HTMLDivElement, GridItemProps>(
             alt={title}
             className={styles.movieImage}
             onError={handleImageError}
+            loading="lazy"
           />
         )}
 
@@ -85,3 +87,4 @@ export const GridItem = forwardRef<HTMLDivElement, GridItemProps>(
     );
   }
 );
+export default memo(GridItem);
