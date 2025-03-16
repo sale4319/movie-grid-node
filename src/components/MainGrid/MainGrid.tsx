@@ -29,6 +29,10 @@ export default function MainGrid() {
     );
   };
 
+  const handleLoadMore = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+  };
+
   const uniqueMovies = movies
     .filter(
       (movie, index, self) => index === self.findIndex((m) => m.id === movie.id)
@@ -93,17 +97,16 @@ export default function MainGrid() {
           block: "center",
         });
       }
-      if (selectedIndex >= 18 && currentPage < totalPages) {
+      if (
+        selectedIndex >= currentPage * itemsPerPage &&
+        currentPage < totalPages
+      ) {
         handleLoadMore();
       }
     } else {
       localStorage.removeItem("selectedMovie");
     }
-  }, [selected, uniqueMovies]);
-
-  const handleLoadMore = () => {
-    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
-  };
+  }, [selected, uniqueMovies, currentPage, totalPages, itemsPerPage]);
 
   return (
     <>

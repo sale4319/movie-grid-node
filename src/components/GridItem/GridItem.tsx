@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import { FavouriteButton } from "../../components";
 import { formatDate } from "../../utils";
 
@@ -30,12 +30,16 @@ export const GridItem = forwardRef<HTMLDivElement, GridItemProps>(
     },
     ref
   ) => {
-    if (!date) {
+    const [isImageBroken, setIsImageBroken] = useState(false);
+    if (!date || !title || isImageBroken) {
       return null;
     }
     const formattedDate = formatDate(date);
     const selectedMode = isSelected ? styles.selected : "";
 
+    const handleImageError = () => {
+      setIsImageBroken(true);
+    };
     return (
       <div
         ref={ref}
@@ -44,9 +48,19 @@ export const GridItem = forwardRef<HTMLDivElement, GridItemProps>(
         data-testid="grid-item"
       >
         {isSelected ? (
-          <img src={backdropUrl} alt={title} className={styles.movieBackdrop} />
+          <img
+            src={backdropUrl}
+            alt={title}
+            className={styles.movieBackdrop}
+            onError={handleImageError}
+          />
         ) : (
-          <img src={posterUrl} alt={title} className={styles.movieImage} />
+          <img
+            src={posterUrl}
+            alt={title}
+            className={styles.movieImage}
+            onError={handleImageError}
+          />
         )}
 
         <div className={styles.movieInfoWrapper}>
