@@ -2,10 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { GridItem } from "../../components";
 import { BASE_URL, FILE_SIZE } from "../../constants";
 import { LoadMoreButton } from "../../components";
-import { useLocalStorage } from "../../utils";
+import { useLocalStorage, useKeyboardNavigation } from "../../utils";
 
 import movies from "../../mocks/moviesFixture.json";
 import styles from "./MainGrid.module.css";
+import { Movie } from "../../types";
+
 export default function MainGrid() {
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [selected, setSelected] = useLocalStorage<number | null>(
@@ -33,57 +35,25 @@ export default function MainGrid() {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
   };
 
-  const uniqueMovies = movies
+  const uniqueMovies: Movie[] = movies
+    .filter((movie) => movie.poster_path !== null)
     .filter(
-      (movie, index, self) => index === self.findIndex((m) => m.id === movie.id)
+      (movie, index, self) =>
+        index === self.findIndex((m) => m.id === movie.id) &&
+        movie.poster_path !== null
     )
     .sort((a, b) => b.ratings[0].rating - a.ratings[0].rating);
 
   const totalPages = Math.ceil(uniqueMovies.length / itemsPerPage);
   const currentMovies = uniqueMovies.slice(0, currentPage * itemsPerPage);
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (
-        event.key === "ArrowDown" ||
-        event.key === "ArrowUp" ||
-        event.key === "ArrowLeft" ||
-        event.key === "ArrowRight"
-      ) {
-        event.preventDefault();
-        const currentIndex = uniqueMovies.findIndex(
-          (movie) => movie.id === selected
-        );
-        let newIndex = currentIndex;
-
-        if (event.key === "ArrowRight") {
-          newIndex = (currentIndex + 1) % uniqueMovies.length;
-        } else if (event.key === "ArrowLeft") {
-          newIndex =
-            (currentIndex - 1 + uniqueMovies.length) % uniqueMovies.length;
-          if (newIndex < 0) newIndex = 0;
-        } else if (event.key === "ArrowDown") {
-          newIndex = (currentIndex + columns) % uniqueMovies.length;
-        } else if (event.key === "ArrowUp") {
-          newIndex = currentIndex - columns;
-          if (newIndex < 0) newIndex = 0;
-        }
-
-        if (newIndex === uniqueMovies.length - 1) {
-          newIndex = 0;
-        }
-
-        setSelected(uniqueMovies[newIndex].id);
-      } else if (event.key === "Enter" && selected !== null) {
-        toggleFavourite(selected);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [selected, uniqueMovies]);
+  useKeyboardNavigation(
+    uniqueMovies,
+    selected,
+    setSelected,
+    toggleFavourite,
+    columns
+  );
 
   useEffect(() => {
     if (selected !== null) {
