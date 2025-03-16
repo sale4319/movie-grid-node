@@ -1,8 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { GridItem } from "../../components";
 import { BASE_URL, FILE_SIZE } from "../../constants";
 import { LoadMoreButton } from "../../components";
-import { useLocalStorage, useKeyboardNavigation } from "../../utils";
+import {
+  useLocalStorage,
+  useKeyboardNavigation,
+  useScrollToSelected,
+} from "../../hooks";
 
 import movies from "../../mocks/moviesFixture.json";
 import styles from "./MainGrid.module.css";
@@ -55,29 +59,15 @@ export default function MainGrid() {
     columns
   );
 
-  useEffect(() => {
-    if (selected !== null) {
-      localStorage.setItem("selectedMovie", selected.toString());
-      const selectedIndex = uniqueMovies.findIndex(
-        (movie) => movie.id === selected
-      );
-      if (itemRefs.current[selectedIndex]) {
-        itemRefs.current[selectedIndex]?.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-      }
-      if (
-        selectedIndex >= currentPage * itemsPerPage &&
-        currentPage < totalPages
-      ) {
-        handleLoadMore();
-      }
-    } else {
-      localStorage.removeItem("selectedMovie");
-    }
-  }, [selected, uniqueMovies, currentPage, totalPages, itemsPerPage]);
-
+  useScrollToSelected(
+    selected,
+    uniqueMovies,
+    itemRefs,
+    currentPage,
+    totalPages,
+    itemsPerPage,
+    handleLoadMore
+  );
   return (
     <>
       <div data-testid="main-grid" className={styles.mainGrid}>
