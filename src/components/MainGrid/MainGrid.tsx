@@ -7,11 +7,11 @@ import {
   useKeyboardNavigation,
   useScrollToSelected,
 } from "../../hooks";
+import { debounce, getUniqueMovies } from "../../utils";
+import { Movie } from "../../types";
 
 import movies from "../../mocks/moviesFixture.json";
 import styles from "./MainGrid.module.css";
-import { Movie } from "../../types";
-import { getUniqueMovies } from "../../utils";
 
 export default function MainGrid() {
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -23,6 +23,14 @@ export default function MainGrid() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 18;
   const columns = 6;
+
+  const uniqueMovies: Movie[] = useCallback(
+    () => getUniqueMovies(movies),
+    [movies]
+  )();
+
+  const totalPages = Math.ceil(uniqueMovies.length / itemsPerPage);
+  const currentMovies = uniqueMovies.slice(0, currentPage * itemsPerPage);
 
   const handleSelect = (id: number) => {
     setSelected((prevSelected) => (prevSelected === id ? null : id));
@@ -36,17 +44,9 @@ export default function MainGrid() {
     );
   };
 
-  const handleLoadMore = () => {
+  const handleLoadMore = debounce(() => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
-  };
-
-  const uniqueMovies: Movie[] = useCallback(
-    () => getUniqueMovies(movies),
-    [movies]
-  )();
-
-  const totalPages = Math.ceil(uniqueMovies.length / itemsPerPage);
-  const currentMovies = uniqueMovies.slice(0, currentPage * itemsPerPage);
+  }, 300);
 
   useKeyboardNavigation(
     uniqueMovies,
